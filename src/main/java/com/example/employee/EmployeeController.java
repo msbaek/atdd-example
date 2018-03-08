@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class EmployeeController {
+    private GreetingService greetingService;
+
     @GetMapping("/hello/{lastName}")
     public String greeting(@PathVariable String lastName) {
-        return "Who is this " + lastName + " you're talking about?";
+        return greetingService.greet(lastName);
     }
 }
