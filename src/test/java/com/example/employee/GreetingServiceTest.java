@@ -33,14 +33,13 @@ public class GreetingServiceTest {
 
     @Test
     public void greet_with_nonExisting_last_name_should_return_default_message() {
-//        String nonExistingLastName = "nonExistingLastName";
-//        String msg = greetService.greet(nonExistingLastName);
-//        assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
         String msg = greetService.greet(nonExistingLastName);
         assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
+    }
 
+    @Test
+    public void greet_with_existing_last_name_should_return_hello_message_with_appropriate_names() {
         String msg1 = greetService.greet(existingLastName);
         assertThat(msg1, is(String.format("Hello %s %s!", firstName, lastName)));
     }
-
 }
