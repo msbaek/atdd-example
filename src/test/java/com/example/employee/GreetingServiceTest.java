@@ -16,10 +16,18 @@ import static org.mockito.BDDMockito.given;
 public class GreetingServiceTest {
     private GreetingService greetService;
     @Mock private EmployeeRepository repository;
+    private final String nonExistingLastName = "nonExistingLastName";
+    private final String existingLastName = "existingLastName";
+    private final String firstName = "firstName";
+    private final String lastName = "lastName";
 
     @Before
     public void setUp() throws Exception {
         greetService = new GreetingService();
+        given(repository.findByLastName(nonExistingLastName))
+                .willReturn(Optional.empty());
+        given(repository.findByLastName(existingLastName))
+                .willReturn(Optional.of(new Employee(lastName, firstName)));
     }
 
     @Test
@@ -28,26 +36,17 @@ public class GreetingServiceTest {
 //        String msg = greetService.greet(nonExistingLastName);
 //        assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
 
-        String nonExistingLastName = "nonExistingLastName";
-        String existingLastName = "existingLastName";
-        String firstName = "firstName";
-        String lastName = "lastName";
-
-        given(repository.findByLastName(nonExistingLastName))
-                .willReturn(Optional.empty());
-        given(repository.findByLastName(existingLastName))
-                .willReturn(Optional.of(new Employee(lastName, firstName)));
-
-        Optional<Employee> employee = repository.findByLastName(nonExistingLastName);
+        String lastName = this.nonExistingLastName;
+        Optional<Employee> employee = repository.findByLastName(lastName);
         String msg = employee
                 .map(e -> String.format("Hello %s %s!", e.getFirstName(), e.getLastName()))
-                .orElse("Who is this " + nonExistingLastName + " you're talking about?");
-        assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
+                .orElse("Who is this " + lastName + " you're talking about?");
+        assertThat(msg, is("Who is this " + lastName + " you're talking about?"));
 
-        employee = repository.findByLastName(existingLastName);
-        msg = employee
+        Optional<Employee> employee1 = repository.findByLastName(existingLastName);
+        String msg1 = employee1
                 .map(e -> String.format("Hello %s %s!", e.getFirstName(), e.getLastName()))
-                .orElse("Who is this " + nonExistingLastName + " you're talking about?");
-        assertThat(msg, is(String.format("Hello %s %s!", firstName, lastName)));
+                .orElse("Who is this " + existingLastName + " you're talking about?");
+        assertThat(msg1, is(String.format("Hello %s %s!", firstName, this.lastName)));
     }
 }
