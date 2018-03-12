@@ -1,11 +1,13 @@
 package com.example.employee;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class GreetingService {
+    @Autowired
     EmployeeRepository repository;
 
     public String greet(String lastName) {

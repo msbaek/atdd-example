@@ -34,6 +34,7 @@ public class EmployeeControllerRestAssuredIntegrationTest {
                 .port(8080)
         ;
 
+        repository.deleteAll();
         repository.save(new Employee("Baek", "Myeongseok"));
     }
 
@@ -52,7 +53,7 @@ public class EmployeeControllerRestAssuredIntegrationTest {
     @Test
     public void shouldReturnGreetingMessageWhenLastNameFound() {
         String existingLastName = "Baek";
-        String expectedMessage = "Hello Baek Myeongseok !";
+        String expectedMessage = "Hello Myeongseok Baek!";
 
         given().spec(basicRequest).basePath("/api/hello/" + existingLastName)
                 .when().get()
