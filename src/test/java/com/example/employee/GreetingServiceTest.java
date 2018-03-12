@@ -24,6 +24,7 @@ public class GreetingServiceTest {
     @Before
     public void setUp() throws Exception {
         greetService = new GreetingService();
+        greetService.repository = repository;
         given(repository.findByLastName(nonExistingLastName))
                 .willReturn(Optional.empty());
         given(repository.findByLastName(existingLastName))
@@ -35,17 +36,11 @@ public class GreetingServiceTest {
 //        String nonExistingLastName = "nonExistingLastName";
 //        String msg = greetService.greet(nonExistingLastName);
 //        assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
-        String msg = greet(nonExistingLastName);
+        String msg = greetService.greet(nonExistingLastName);
         assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
 
-        String msg1 = greet(existingLastName);
+        String msg1 = greetService.greet(existingLastName);
         assertThat(msg1, is(String.format("Hello %s %s!", firstName, lastName)));
     }
 
-    private String greet(String lastName) {
-        Optional<Employee> employee = repository.findByLastName(lastName);
-        return employee
-                .map(e -> String.format("Hello %s %s!", e.getFirstName(), e.getLastName()))
-                .orElse("Who is this " + lastName + " you're talking about?");
-    }
 }
