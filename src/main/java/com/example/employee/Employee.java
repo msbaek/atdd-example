@@ -1,10 +1,12 @@
 package com.example.employee;
 
-import javax.annotation.Generated;
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "employees")
+@Getter
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,5 +19,7 @@ public class Employee {
     }
 
     public Employee(String lastName, String firstName) {
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 }
