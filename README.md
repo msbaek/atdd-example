@@ -7,10 +7,12 @@
 
 ### Levels of Tests
 - Acceptance: Does the whole system work?
-	- same as: “functional tests,” “customer tests,” “system tests.”
+	- same as: “functional tests,” “customer tests,” “system tests.”, "UI tests"
 	- 진척도 측정
 - Integration: Does our code work against code we can't change?
+	- spring configuration works ?
 - Unit: Do our objects do the right thing, are they convenient to work with?  
+	- iterative discovery of interfaces, design with working code(refactoring)
 
 ### ATDD란 ?
 https://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/
@@ -29,6 +31,7 @@ https://www.agilealliance.org/glossary/atdd/
 
 ### TDD란 ?
 - 고품질의 SW를 작성하는 가장 빠른 방법
+	- Kent Beck. punch card / print out.
 - 작고, 빠른 피드백
 - 첫번째 고객. 메뉴얼. 
 
@@ -42,11 +45,13 @@ https://www.agilealliance.org/glossary/atdd/
 ![](https://api.monosnap.com/rpc/file/download?id=FE2EqCQWrrFYfaoWz8cj6CDbZ9MHZE)
 
 refactoring: mandatory not optional
-- 시간이 없다 ?
-- 화장실 ???
+- 시간이 없다 ? 별도의 일정 ?
+- 화장실 다녀오면서 손 씻을 시간을 별로도 잡나 ???
 
 ### Test First vs After
 ![](https://api.monosnap.com/rpc/file/download?id=rHs9009YOGood4JvQ0dX1DP6H7YDrb)
+
+- Test After도 나쁘지 않지만 그건 TDD(Design)이 아니라 Coverage가 일부 확보된 것
 
 ### The Bigger Picture
 
@@ -60,14 +65,14 @@ refactoring: mandatory not optional
 		- 어디서도 호출되지 않거나 
 		- 시스템의 다른 부분과 통합할 수 없거나
 		- 재작성해야만 하는
-	- 경우가 존재한다(bottom-up).
+	- 경우가 존재한다(bottom-up의 폐해).
 - 어디서 코딩을 시작하고, 언제 코딩을 종료할지를 어떻게 알 수 있을까 ?(top-down)
 - 특정 기능(Feature)를 구현할 때 우리가 구현하려는 기능을 보여주는 Acceptance Test를 작성함으로써 시작
 	- 이 테스트가 실패하는 동안은 시스템이 이 기능을 아직 구현하지 못했다는 것을 보여준다. 그리고 테스트가 성공하면 우린 완료한 것이다.
 
 ### 인수 테스트 vs 단위 테스트
 
-|  인수테스트 | 단위테스트 |
+|  **인수테스트** | **단위테스트** |
 | :-------  | :------ |
 | 인수테스트 작성으로 기능 구현을 시작 | 객체나 소수의 객체 집합을 격리해서 다룸 |
 | 시스템이 전체적으로 잘 동작하는지 알려줌 | 클래스 설계를 돕고, 동작한다는 확신을 갖게 하는 점에서 중요 |
@@ -78,19 +83,54 @@ refactoring: mandatory not optional
 가장 간단한 성공 케이스로 테스트를 시작
 - degenerate or failure case로 시작하는 것은 쉽다
 - Degenerate cases는 시스템의 가치에 많은 것을 추가하지 않고, 또한 우리의 생각이 유효한지에 대해 충분한 피드백틀 주지 않는다.
-- 당신이 읽고 싶은 테스트를 작성하라
+- 당신이 읽고 싶은 테스트를 작성하라(Unit vs. Acceptance Test)
 
 ## Example
 
+### 0. 요구 사항
+
+사용자(Employee)는 lastName을 인자로 인사말(greeting)을 요구한다. 
+시스템은 lastName으로 DB에서 Employee를 찾고 
+- 존재하는 경우 "Hello ***firstName*** ***lastName*** !"을
+- 존재하지 않는 경우 "Who is this ***lastName*** you're talking about?"을
+
+반환한다.
+		
 ### 1. Create Project
 
-![](https://api.monosnap.com/rpc/file/download?id=krFtUvtDVYBsxa5WIYYHhz4IhTykjj)
+![](https://api.monosnap.com/rpc/file/download?id=fHHuT4HGiCFmMZtM1S9DaTWOz53VXj)
+
+```xml
+<dependency>
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <version>3.0.7</version>
+    <scope>test</scope>
+</dependency>
+```
+
+추가
 
 ### 2. Acceptance Test
 
 #### 2.1 rest-assured를 이용한 Acceptance Test
 ```java
-RunWith(SpringRunner.class)
+package com.example.employee;
+
+import io.restassured.specification.RequestSpecification;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
         classes = EmployeeApplication.class
@@ -110,7 +150,7 @@ public class EmployeeControllerRestAssuredIntegrationTest {
                 .baseUri("http://localhost")
                 .port(8080)
         ;
-        
+
         repository.deleteAll();
         repository.save(new Employee("Baek", "Myeongseok"));
     }
@@ -142,6 +182,13 @@ public class EmployeeControllerRestAssuredIntegrationTest {
 ```
 
 #### 2.2 Make it Works
+
+- add src/test/resources/application-integration.properties
+
+```language
+spring.datasource.url = jdbc:h2:mem:test
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect
+```
 
 - add jpa annotation to Employee, EmployeeRepository
 - add EmployeeController
@@ -240,6 +287,8 @@ public class GreetingService {
     }
 }
 ```
+
+move후에 change signature로 test에 대한 의존성 제거
 
 ![](https://api.monosnap.com/rpc/file/download?id=w1EQ6TJitin7OpHTpmyXshkkqRTMQX)
 
