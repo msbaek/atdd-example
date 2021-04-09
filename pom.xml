@@ -48,6 +48,12 @@
             <version>3.0.7</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <artifactId>mockito-core</artifactId>
+            <groupId>org.mockito</groupId>
+            <version>3.8.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

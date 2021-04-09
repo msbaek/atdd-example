@@ -1,33 +1,21 @@
 package com.example.employee;
 
 import io.restassured.specification.RequestSpecification;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
-        classes = EmployeeApplication.class
-)
-@TestPropertySource(
-        locations = "classpath:application-integration.properties"
-)
-public class EmployeeControllerRestAssuredIntegrationTest {
+public class EmployeeControllerRestAssuredIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     private EmployeeRepository repository;
 
     private RequestSpecification basicRequest;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         basicRequest = given()
                 .baseUri("http://localhost")

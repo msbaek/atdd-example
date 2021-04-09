@@ -1,18 +1,17 @@
 package com.example.employee;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GreetingServiceTest {
     private GreetingService greetService;
     @Mock private EmployeeRepository repository;
@@ -21,25 +20,24 @@ public class GreetingServiceTest {
     private final String firstName = "firstName";
     private final String lastName = "lastName";
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        greetService = new GreetingService();
-        greetService.repository = repository;
-        given(repository.findByLastName(nonExistingLastName))
-                .willReturn(Optional.empty());
-        given(repository.findByLastName(existingLastName))
-                .willReturn(Optional.of(new Employee(lastName, firstName)));
+        greetService = new GreetingService(repository);
     }
 
     @Test
     public void greet_with_nonExisting_last_name_should_return_default_message() {
+        given(repository.findByLastName(nonExistingLastName))
+                .willReturn(Optional.empty());
         String msg = greetService.greet(nonExistingLastName);
-        assertThat(msg, is("Who is this " + nonExistingLastName + " you're talking about?"));
+        assertThat(msg).isEqualTo("Who is this " + nonExistingLastName + " you're talking about?");
     }
 
     @Test
     public void greet_with_existing_last_name_should_return_hello_message_with_appropriate_names() {
+        given(repository.findByLastName(existingLastName))
+                .willReturn(Optional.of(new Employee(lastName, firstName)));
         String msg1 = greetService.greet(existingLastName);
-        assertThat(msg1, is(String.format("Hello %s %s!", firstName, lastName)));
+        assertThat(msg1).isEqualTo(String.format("Hello %s %s!", firstName, lastName));
     }
 }

@@ -1,14 +1,14 @@
 package com.example.employee;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class GreetingService {
-    @Autowired
-    EmployeeRepository repository;
+    private final EmployeeRepository repository;
 
     public String greet(String lastName) {
         Optional<Employee> employee = repository.findByLastName(lastName);
