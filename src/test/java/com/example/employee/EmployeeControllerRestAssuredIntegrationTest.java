@@ -43,6 +43,10 @@ public class EmployeeControllerRestAssuredIntegrationTest {
         String nonExistingLastName = "nonExistingLastName";
         String expectedMessage = "Who is this " + nonExistingLastName + " you're talking about?";
 
+        getAndAssertResultString(nonExistingLastName, expectedMessage);
+    }
+
+    private void getAndAssertResultString(String nonExistingLastName, String expectedMessage) {
         given().spec(basicRequest).basePath("/api/hello/" + nonExistingLastName)
                 .when().get()
                 .then().log().body()
@@ -55,10 +59,6 @@ public class EmployeeControllerRestAssuredIntegrationTest {
         String existingLastName = "Baek";
         String expectedMessage = "Hello Myeongseok Baek!";
 
-        given().spec(basicRequest).basePath("/api/hello/" + existingLastName)
-                .when().get()
-                .then().log().body()
-                .statusCode(HttpStatus.OK.value())
-                .body(is(expectedMessage));
+        getAndAssertResultString(existingLastName, expectedMessage);
     }
 }

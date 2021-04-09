@@ -44,11 +44,7 @@ public class EmployeeControllerMockMvcIntegrationTest {
         String nonExistingLastName = "nonExistingLastName";
         String expectedMessage = "Who is this " + nonExistingLastName + " you're talking about?";
 
-        MvcResult mvcResult = mockMvc.perform(get("/api/hello/" + nonExistingLastName))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-        assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expectedMessage);
+        getAndAssertResponseString(nonExistingLastName, expectedMessage);
     }
 
     @Test
@@ -56,11 +52,13 @@ public class EmployeeControllerMockMvcIntegrationTest {
         String existingLastName = "Baek";
         String expectedMessage = "Hello Myeongseok Baek!";
 
+        getAndAssertResponseString(existingLastName, expectedMessage);
+    }
+
+    private void getAndAssertResponseString(String existingLastName, String expectedMessage) throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/api/hello/" + existingLastName))
                 .andDo(print())
                 .andExpect(status().isOk())
-//                .andExpect(jsonPath("$['testChannel'].channelName").exists())
-//                .andExpect(jsonPath("$['testChannel'].enabled").isBoolean());
                 .andReturn();
         assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expectedMessage);
     }
