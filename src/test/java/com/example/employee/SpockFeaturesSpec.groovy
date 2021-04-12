@@ -104,4 +104,21 @@ class SpockFeaturesSpec extends Specification {
         then:
         4 * renderer.drawLine()
     }
+
+    /**
+     * Mocks are useful for checking calls out of our code,
+     * Stubs are useful for providing data or values into the code we’re testing.
+     */
+    def "should be able to create a stub"() {
+        given:
+        Palette palette = Stub()
+        palette.getPrimaryColour() >> Colour.Red
+        def renderer = new Renderer(palette)
+
+        expect:
+        renderer.getForegroundColour() == Colour.Red
+    }
+
+    class Palette {
+    }
 }
