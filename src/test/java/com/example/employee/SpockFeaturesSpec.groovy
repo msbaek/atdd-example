@@ -68,4 +68,40 @@ class SpockFeaturesSpec extends Specification {
         7 | 4 || 7
         0 | 0 || 0
     }
+
+    class Renderer {
+        private int slides
+        private Renderer renderer
+
+        public void drawLine() {
+        }
+    }
+
+    class Polygon {
+        private Renderer renderer;
+        private int slides;
+
+        Polygon(int slides, Renderer renderer) {
+            this.renderer = renderer
+            this.slides = slides
+        }
+
+        void draw() {
+            for (int i = 0; i < slides; i++)
+                renderer.drawLine()
+        }
+    }
+
+    def "should be able to mock a concrete class"() {
+        given:
+//        Renderer renderer = Mock()
+        def renderer = Mock(Renderer)
+        def polygon = new Polygon(4, renderer)
+
+        when:
+        polygon.draw()
+
+        then:
+        4 * renderer.drawLine()
+    }
 }
