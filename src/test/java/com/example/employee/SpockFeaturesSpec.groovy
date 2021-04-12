@@ -57,4 +57,15 @@ class SpockFeaturesSpec extends Specification {
         where:
         number << [0, 1, 2, 3, 4]
     }
+
+    def "should use data tables for calculating max"() {
+        expect:
+        Math.max(a, b) == max
+
+        where:
+        a | b || max
+        1 | 3 || 3
+        7 | 4 || 7
+        0 | 0 || 0
+    }
 }
