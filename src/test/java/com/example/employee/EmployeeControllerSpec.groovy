@@ -8,6 +8,26 @@ import spock.lang.Specification
 class EmployeeControllerSpec extends Specification {
     def "should be a simple assertion"() {
         expect:
-        1 == 0
+        1 == 1
+    }
+    def "should demonstrate given-when-then"() {
+        given:
+        int i = 1
+        int j = 2
+        int sum = 0
+
+        when:
+        sum = i + j
+
+        then:
+        sum == i + j
+    }
+
+    def "should expect exceptions"() {
+        when:
+        throw new IllegalAccessException();
+
+        then:
+        thrown(IllegalAccessException)
     }
 }
