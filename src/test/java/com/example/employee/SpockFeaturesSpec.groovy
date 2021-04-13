@@ -121,4 +121,15 @@ class SpockFeaturesSpec extends Specification {
 
     class Palette {
     }
+
+    /**
+     * static helper method에서는 comparison 연산자를 직접 사용 못하고. assert a == b로 해야 함
+     * with(xx) {
+     *     yy
+     *     zz
+     * } 등의 비교 가능
+     * verifyAll(xx) {
+     *
+     * }
+     */
 }
