@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-public class GreetingServiceTest {
+public class GreetingDtoServiceTest {
     private GreetingService greetService;
     @Mock private EmployeeRepository repository;
     private final String nonExistingLastName = "nonExistingLastName";
