@@ -7,6 +7,10 @@ import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
+/**
+ * https://blog.j-labs.pl/2019/05/Test-your-REST-API-with-Spock-Introduction-to-Spock-Framework
+ */
+
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT
 )

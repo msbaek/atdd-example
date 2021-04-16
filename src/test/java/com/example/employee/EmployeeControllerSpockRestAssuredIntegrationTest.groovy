@@ -1,17 +1,17 @@
-package com.example.employee;
+package com.example.employee
 
-import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
+import io.restassured.specification.RequestSpecification
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.http.HttpStatus
 import spock.lang.Specification
-import spock.lang.Subject;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.Is.is;
+import static io.restassured.RestAssured.given
+import static org.hamcrest.core.Is.is
 
+/**
+ * http://code-addict.pl/spock-restassured-docs/
+ */
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT
 )
