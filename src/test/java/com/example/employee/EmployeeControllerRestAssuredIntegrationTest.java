@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 public class EmployeeControllerRestAssuredIntegrationTest extends AbstractIntegrationTest {
     @Autowired
@@ -29,17 +29,18 @@ public class EmployeeControllerRestAssuredIntegrationTest extends AbstractIntegr
     @Test
     public void shouldReturnDefaultMessageWhenLastNameNotFound() {
         String nonExistingLastName = "nonExistingLastName";
-        String expectedMessage = "Who is this " + nonExistingLastName + " you're talking about?";
+        String expectedMessage = "Who is this " + nonExistingLastName  + " you're talking about?";
 
         getAndAssertResultString(nonExistingLastName, expectedMessage);
     }
 
     private void getAndAssertResultString(String nonExistingLastName, String expectedMessage) {
-        given().spec(basicRequest).basePath("/api/hello/" + nonExistingLastName)
+        given().spec(basicRequest).basePath("/api/hello/")
+                .param("lastName", nonExistingLastName)
                 .when().get()
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value())
-                .body(is(expectedMessage));
+                .body("message", equalTo(expectedMessage));
     }
 
     @Test
