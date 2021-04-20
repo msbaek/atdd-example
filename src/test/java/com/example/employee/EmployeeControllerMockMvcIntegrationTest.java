@@ -5,11 +5,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -43,10 +42,11 @@ public class EmployeeControllerMockMvcIntegrationTest extends AbstractIntegratio
     }
 
     private void getAndAssertResponseString(String existingLastName, String expectedMessage) throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/api/hello/" + existingLastName))
+        mockMvc.perform(get("/api/hello/")
+                .param("lastName", existingLastName))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("message").value(expectedMessage))
                 .andReturn();
-        assertThat(mvcResult.getResponse().getContentAsString()).isEqualTo(expectedMessage);
     }
 }
