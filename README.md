@@ -267,10 +267,14 @@ public class GreetingServiceTest {
 ##### 3.2.1 Prepare Refactoring
 
 - extract fields
-- move up given methods to setUp
+- move up given code to setUp
 - declare variables(lastName, employee1, msg1)
 
 ![](https://api.monosnap.com/rpc/file/download?id=WuBIcbFa7v6ydqIrW2VSdkczGpmGMr)
+
+- extract method to move
+
+![](https://api.monosnap.com/rpc/file/download?id=w1EQ6TJitin7OpHTpmyXshkkqRTMQX)
 
 ##### 3.2.2 Move greet method to Service
 
@@ -289,8 +293,6 @@ public class GreetingService {
 ```
 
 move후에 change signature로 test에 대한 의존성 제거
-
-![](https://api.monosnap.com/rpc/file/download?id=w1EQ6TJitin7OpHTpmyXshkkqRTMQX)
 
 ##### 3.2.3 Clean Test Code
 
