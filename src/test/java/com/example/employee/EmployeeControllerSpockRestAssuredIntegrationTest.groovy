@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus
 import spock.lang.Specification
 
 import static io.restassured.RestAssured.given
-import static org.hamcrest.core.Is.is
+import static org.hamcrest.CoreMatchers.equalTo
 
 /**
  * http://code-addict.pl/spock-restassured-docs/
@@ -48,10 +48,11 @@ class EmployeeControllerSpockRestAssuredIntegrationTest extends Specification {
     }
 
     private void getAndAssertResultString(String nonExistingLastName, String expectedMessage) {
-        given().spec(basicRequest).basePath("/api/hello/" + nonExistingLastName)
+        given().spec(basicRequest).basePath("/api/hello/")
+                .param("lastName", nonExistingLastName)
                 .when().get()
                 .then().log().body()
                 .statusCode(HttpStatus.OK.value())
-                .body(is(expectedMessage));
+                .body("message", equalTo(expectedMessage));
     }
 }
