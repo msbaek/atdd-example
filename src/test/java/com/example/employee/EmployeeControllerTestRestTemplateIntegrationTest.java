@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -31,8 +30,8 @@ public class EmployeeControllerTestRestTemplateIntegrationTest extends AbstractI
     }
 
     private void getAndAssertResultString(String nonExistingLastName, String expectedMessage) {
-        String result = restTemplate.getForObject(baseUrl + "/api/hello/" + nonExistingLastName, String.class);
-        assertThat(result).isEqualTo(expectedMessage);
+        GreetingDto result = restTemplate.getForObject(baseUrl + "/api/hello/?lastName={lastName}", GreetingDto.class, nonExistingLastName);
+        assertThat(result.getMessage()).isEqualTo(expectedMessage);
     }
 
     @Test
