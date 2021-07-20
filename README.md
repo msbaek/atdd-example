@@ -324,10 +324,10 @@ spring mock mvc도 훌륭. 원격의 CI서버에서 원격의 검증 서버에 �
 **@SpringBootTest**
 - 통합 테스트, 전체 Bean 로딩됨
 
-** @WebMvcTest**
+**@WebMvcTest**
 - WebApplicationContext이 Bean 들이 로딩됨
 
-** @DataJpaTest	**
+**@DataJpaTest**
 - Repository 레스트를 위한 JPA 관련 Bean들이 로딩됨
 - persistence layer 테스트를 위한 표준 설정 제공
 	- H2 인메모리 DB, Hiberante, Spring Data, Datasource 등을 설정
