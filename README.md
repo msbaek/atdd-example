@@ -3,7 +3,7 @@
 
 ## ATDD 개요
 
-![](https://api.monosnap.com/rpc/file/download?id=oTQD4t1MIjUpvl64XlH4BwM37FHCFy)
+![](./images/fig1.png)
 
 ### Levels of Tests
 - Acceptance: Does the whole system work?
@@ -42,22 +42,23 @@ https://www.agilealliance.org/glossary/atdd/
 
 #### TDD 절차
 
-![](https://api.monosnap.com/rpc/file/download?id=FE2EqCQWrrFYfaoWz8cj6CDbZ9MHZE)
+![](./images/fig2.png)
 
 refactoring: mandatory not optional
 - 시간이 없다 ? 별도의 일정 ?
 - 화장실 다녀오면서 손 씻을 시간을 별로도 잡나 ???
 
 ### Test First vs After
-![](https://api.monosnap.com/rpc/file/download?id=rHs9009YOGood4JvQ0dX1DP6H7YDrb)
+![](./images/fig3.png)
 
 - Test After도 나쁘지 않지만 그건 TDD(Design)이 아니라 Coverage가 일부 확보된 것
 
 ### The Bigger Picture
 
+
 [Growing Object-Oriented Software, Guided by Tests](https://www.amazon.com/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627)
 
-![](https://api.monosnap.com/rpc/file/download?id=ZtdjZoPmCQ0EIkYwVn5wSJnohmE9Mc)
+![](./images/fig4.png)
 
 - 특정 클래스에 대한 단위 테스트를 작성함으로써 TDD를 시작하고 싶은 욕구 발생
 	- 테스트를 전혀 작성하지 않는 것보다는 좋겠지만 단위 테스트만 있는 프로젝트는 TDD 프로세스의 아주 중요한 혜택을 놓치게 됨
@@ -98,7 +99,7 @@ refactoring: mandatory not optional
 		
 ### 1. Create Project
 
-![](https://api.monosnap.com/rpc/file/download?id=fHHuT4HGiCFmMZtM1S9DaTWOz53VXj)
+![](./images/fig5.png)
 
 ```xml
 <dependency>
@@ -193,7 +194,7 @@ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect
 - add jpa annotation to Employee, EmployeeRepository
 - add EmployeeController
 
-![](https://api.monosnap.com/rpc/file/download?id=KYjR5ccJMafoSlKHVw3agkLiSSJohP)
+![](./images/fig6.png)
 
 ```java
 @RestController
@@ -220,7 +221,7 @@ controller는
 
 따라서 우리는 service 객체가 필요하다.
 
-![](https://api.monosnap.com/rpc/file/download?id=4RwtT63KcBx0Kn9CJB29ZthmzjGnAV)
+![](./images/fig7.png)
 
 ```java
 @Service
@@ -260,7 +261,7 @@ public class GreetingServiceTest {
 
 **테스트에 직접 서비스 메소드를 구현**한다.
 
-![](https://api.monosnap.com/rpc/file/download?id=YyVnkaexWHrDjCqtbXMQncVdYCpN56)
+![](./images/fig8.png)
 
 이때 실패하는지도 인자를 바꿔서 확인해서 우리의 테스트가 성공하는 경우와 실패하는 경우 모두를 검증하는지 확인
 
@@ -270,11 +271,11 @@ public class GreetingServiceTest {
 - move up given code to setUp
 - declare variables(lastName, employee1, msg1)
 
-![](https://api.monosnap.com/rpc/file/download?id=WuBIcbFa7v6ydqIrW2VSdkczGpmGMr)
+![](./images/fig9.png)
 
 - extract method to move
 
-![](https://api.monosnap.com/rpc/file/download?id=w1EQ6TJitin7OpHTpmyXshkkqRTMQX)
+![](./images/fig10.png)
 
 ##### 3.2.2 Move greet method to Service
 
@@ -299,13 +300,13 @@ move후에 change signature로 test에 대한 의존성 제거
 이제 우리의 테스트 코드는 comment out한 초기 의도를 나타낸 테스트 코드와 같아졌다.
 comment를 삭제하고 , 테스트 명에 맞게 메소드를 분리한다.
 
-![](https://api.monosnap.com/rpc/file/download?id=pyxD4Zj5aV3f19XlzSvyCneZA69TNB)
+![](./images/fig11.png)
 
 ### 4. Making Integration test to use Real Objects
 
 controller integration test가 real object로 동작하도록 수정
 
-![](https://api.monosnap.com/rpc/file/download?id=ljNUD2t3s4Btaq4rpSp3XpM5xtx51n)
+![](./images/fig12.png)
 
 controller integration test가 제대로된 E2E 테스트(Acceptance)가 되었고, 우리의 작업은 완료되었다.
 
