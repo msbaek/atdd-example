@@ -321,25 +321,29 @@ spring mock mvc도 훌룡. 원격의 CI서버에서 원격의 검증 서버에 �
 
 ### Annotations
 
-**@RunWith(SpringRunner.class)**
-- spring boot test의 기능과 junit의 연결의 제공
-- junit 테스트에서 spring boot test 기능이 필요할 때 이 어노테이션을 사용
- 
 **@SpringBootTest**
-- 전체 container를 bootstrap하게 함
-- 테스트에서 사용할 ApplicationContext를 생성하도록 하는 어노테이션
+- 통합 테스트, 전체 Bean 로딩됨
 
-**@AutoConfigureMockMvc**
+** @WebMvcTest**
+- WebApplicationContext이 Bean 들이 로딩됨
 
-**@TestPropertySource**
-- 테스트에서 사용할 properties 파일의 위치를 설정
-- application.properties에 정의된 설정을 오버라이드
-
-**@DataJpaTest**
+** @DataJpaTest	**
+- Repository 레스트를 위한 JPA 관련 Bean들이 로딩됨
 - persistence layer 테스트를 위한 표준 설정 제공
 	- H2 인메모리 DB, Hiberante, Spring Data, Datasource 등을 설정
 	- @EntityScan 실행
 	- SQL 로깅 설정
+
+**@ExtendWith(SpringExtension.class)**
+- spring boot test의 기능과 junit의 연결의 제공
+- junit 테스트에서 spring boot test 기능이 필요할 때 이 어노테이션을 사용
+
+**@AutoConfigureMockMvc**
+- MockMvc Autowire 제공
+
+**@TestPropertySource**
+- 테스트에서 사용할 properties 파일의 위치를 설정
+- application.properties에 정의된 설정을 오버라이드
 
 **TestEntityManager**
 - TestEntityManager provided by Spring Boot is an alternative to the standard JPA EntityManager that provides methods commonly used when writing tests
