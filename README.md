@@ -317,7 +317,7 @@ controller integration test가 제대로된 E2E 테스트(Acceptance)가 되었�
 
 ### Why rest-assured ?
 
-spring mock mvc도 훌룡. 원격의 CI서버에서 원격의 검증 서버에 대해서 Integration Test를 해야 하는 필요로 rest-assured 선택
+spring mock mvc도 훌륭. 원격의 CI서버에서 원격의 검증 서버에 대해서 Integration Test를 해야 하는 필요로 rest-assured 선택
 
 ### Annotations
 
